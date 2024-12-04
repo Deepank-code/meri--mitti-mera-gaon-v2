@@ -7,7 +7,7 @@ import {
   FaGamepad,
   FaStopwatch,
 } from "react-icons/fa";
-import { HiMenuAlt3, HiMenuAlt4 } from "react-icons/hi";
+import { HiMenuAlt3 } from "react-icons/hi";
 import { IoIosPeople } from "react-icons/io";
 import {
   RiCoupon3Fill,
@@ -52,8 +52,6 @@ const AdminSideBar = () => {
             : {}
         }
       >
-        <h2>Logo.</h2>
-
         {/* div 1---- */}
         <div>
           <h5>Dashboard</h5>

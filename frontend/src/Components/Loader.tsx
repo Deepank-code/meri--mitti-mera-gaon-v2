@@ -12,13 +12,19 @@ const Loader = () => {
     </div>
   );
 };
-export const Skleton = ({ width = "unset" }: { width?: string }) => {
+export const Skleton = ({
+  width = "unset",
+  count = 3,
+}: {
+  width?: string;
+  count?: number;
+}) => {
+  const skeletions = Array.from({ length: count }, (v, idx) => (
+    <div key={idx} className="skleton-shape"></div>
+  ));
   return (
     <div className="skleton-loader" style={{ width }}>
-      <div className="skleton-shape"></div>
-      <div className="skleton-shape"></div>
-      <div className="skleton-shape"></div>
-      <div className="skleton-shape"></div>
+      {skeletions}
     </div>
   );
 };

@@ -11,5 +11,6 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(userApi.middleware, productApi.middleware),
 });
+export const server = import.meta.env.VITE_SERVER;
 
 export default store;
