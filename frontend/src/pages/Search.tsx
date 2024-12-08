@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "./Home/ProductCard";
 import {
   useCategoriesQuery,
@@ -14,6 +14,7 @@ const Search = () => {
     isLoading: isCategoryLoading,
     isError: isCategoryError,
     error: categoryError,
+    refetch,
   } = useCategoriesQuery("");
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
@@ -26,6 +27,7 @@ const Search = () => {
     data: searchProductData,
     isError: isSearchProductError,
     error: searchProductError,
+    refetch: x,
   } = useSearchProductsQuery({
     search,
     sort,
@@ -33,7 +35,7 @@ const Search = () => {
     price: maxPrice,
     page,
   });
-  console.log(searchProductData);
+
   const addTocartHandler = () => {};
   const isNextPage = page > 1;
   const isPrevpage = page < 1;
@@ -45,6 +47,9 @@ const Search = () => {
     const err = searchProductError as CustomError;
     toast.error(err.data.message);
   }
+  useEffect(() => {
+    refetch();
+  }, [searchProductData, categoryData]);
   return (
     <div className="product-search-page">
       <aside>
@@ -74,7 +79,7 @@ const Search = () => {
           >
             <option value="">All</option>
             {!isCategoryLoading &&
-              categoryData?.categories.map((i) => {
+              categoryData?.categories?.map((i) => {
                 return (
                   <option key={i} value={i}>
                     {i.toUpperCase()}
@@ -96,19 +101,20 @@ const Search = () => {
           <Skleton />
         ) : (
           <div className="search-product-list">
-            {searchProductData?.products.map((i) => {
-              return (
-                <ProductCard
-                  key={i._id}
-                  productID={i._id}
-                  price={i.price}
-                  stock={i.stock}
-                  name={i.name}
-                  photo={i.photo}
-                  handler={addTocartHandler}
-                />
-              );
-            })}
+            {searchProductData?.products &&
+              searchProductData.products.map((i) => {
+                return (
+                  <ProductCard
+                    key={i._id}
+                    productID={i._id}
+                    price={i.price}
+                    stock={i.stock}
+                    name={i.name}
+                    photo={i.photo}
+                    handler={addTocartHandler}
+                  />
+                );
+              })}
           </div>
         )}
 

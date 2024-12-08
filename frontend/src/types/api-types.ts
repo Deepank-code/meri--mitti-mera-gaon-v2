@@ -42,3 +42,8 @@ export type NewProductsRequest = {
   id: string;
   formData: FormData;
 };
+
+export type ProductResponse = {
+  success: boolean;
+  product: Product;
+};

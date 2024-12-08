@@ -65,7 +65,7 @@ const Header = ({ user }: PropTypes) => {
               <FaHome />
               Home
             </NavLink>
-            <NavLink to={"/products"}>
+            <NavLink to={"/search"}>
               <GiFruitBowl />
               Buy Veggies
             </NavLink>

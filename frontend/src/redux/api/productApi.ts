@@ -4,6 +4,7 @@ import {
   CategoriesResponse,
   MessageResponse,
   NewProductsRequest,
+  ProductResponse,
   SearchProductRequest,
   SearchProductResponse,
 } from "../../types/api-types";
@@ -13,33 +14,44 @@ export const productApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${import.meta.env.VITE_SERVER}api/v1/product`,
   }),
+  tagTypes: ["Product"],
   endpoints: (builder) => ({
     latestProducts: builder.query<AllProductsResponse, string>({
-      query: () => "latest",
+      query: () => "/latest",
+      providesTags: ["Product"],
     }),
     allProducts: builder.query<AllProductsResponse, string>({
-      query: (id) => `admin-products?id=${id}`,
+      query: (id) => `/admin-products?id=${id}`,
+      providesTags: ["Product"],
     }),
     categories: builder.query<CategoriesResponse, string>({
-      query: () => `categories`,
+      query: () => `/categories`,
+      providesTags: ["Product"],
     }),
     searchProducts: builder.query<SearchProductResponse, SearchProductRequest>({
       query: ({ price, search, sort, category, page }) => {
-        let base = `all?search=${search}&page=${page}`;
+        let base = `/all?search=${search}&page=${page}`;
         if (price) base += `&price=${price}`;
         if (sort) base += `&sort=${sort}`;
         if (category) base += `&category=${category}`;
         return base;
       },
+      providesTags: ["Product"],
+    }),
+    productDetails: builder.query<ProductResponse, string>({
+      query: (id) => id,
+      providesTags: ["Product"],
     }),
     newProduct: builder.mutation<MessageResponse, NewProductsRequest>({
       query: ({ id, formData }) => {
         return {
-          url: `new?id=${id}`,
+          url: `/new?id=${id}`,
           method: "POST",
           body: formData,
         };
       },
+
+      invalidatesTags: ["Product"],
     }),
   }),
 });
@@ -50,4 +62,5 @@ export const {
   useAllProductsQuery,
   useNewProductMutation,
   useSearchProductsQuery,
+  useProductDetailsQuery,
 } = productApi;

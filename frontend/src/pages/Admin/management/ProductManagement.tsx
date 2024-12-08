@@ -1,5 +1,10 @@
 import { ChangeEvent, useState } from "react";
 import AdminSideBar from "../../../Components/AdminSideBar";
+import { useSelector } from "react-redux";
+
+import { UserReducerInitalStateType } from "../../../types/user-type";
+import { useProductDetailsQuery } from "../../../redux/api/productApi";
+import { useParams } from "react-router-dom";
 interface ProductType {
   name: string;
   price: number;
@@ -9,12 +14,20 @@ interface ProductType {
 const img =
   "https://images.unsplash.com/photo-1504945005722-33670dcaf685?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dmVnZXRhYmxlfGVufDB8fDB8fHww";
 const ProductManagement = () => {
+  const { user } = useSelector(
+    (state: { userReducer: UserReducerInitalStateType }) => state.userReducer
+  );
+  const params = useParams();
+  const { data } = useProductDetailsQuery(params.id!);
+  console.log(data);
+
   const [product, setProduct] = useState<ProductType>({
     name: "puma",
     price: 2000,
     stock: 10,
     photo: img,
   });
+
   const changeImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const file: File | undefined = e.target.files?.[0];
 
@@ -28,6 +41,7 @@ const ProductManagement = () => {
       };
     }
   };
+
   return (
     <div className="adminContainer">
       {/* sidebar */}
