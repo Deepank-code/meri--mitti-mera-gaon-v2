@@ -2,11 +2,13 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   AllProductsResponse,
   CategoriesResponse,
+  DeleteProductRequest,
   MessageResponse,
   NewProductsRequest,
   ProductResponse,
   SearchProductRequest,
   SearchProductResponse,
+  UpdateProductRequest,
 } from "../../types/api-types";
 
 export const productApi = createApi({
@@ -53,6 +55,27 @@ export const productApi = createApi({
 
       invalidatesTags: ["Product"],
     }),
+    updateProduct: builder.mutation<MessageResponse, UpdateProductRequest>({
+      query: ({ userId, formData, productId }) => {
+        return {
+          url: `${productId}?id=${userId}`,
+          method: "PUT",
+          body: formData,
+        };
+      },
+
+      invalidatesTags: ["Product"],
+    }),
+    deleteProduct: builder.mutation<MessageResponse, DeleteProductRequest>({
+      query: ({ userId, productId }) => {
+        return {
+          url: `${productId}?id=${userId}`,
+          method: "DELETE",
+        };
+      },
+
+      invalidatesTags: ["Product"],
+    }),
   }),
 });
 
@@ -63,4 +86,6 @@ export const {
   useNewProductMutation,
   useSearchProductsQuery,
   useProductDetailsQuery,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
 } = productApi;

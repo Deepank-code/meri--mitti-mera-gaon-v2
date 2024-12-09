@@ -48,8 +48,9 @@ const Search = () => {
     toast.error(err.data.message);
   }
   useEffect(() => {
+    x();
     refetch();
-  }, [searchProductData, categoryData]);
+  }, [searchProductData, categoryData, x]);
   return (
     <div className="product-search-page">
       <aside>
