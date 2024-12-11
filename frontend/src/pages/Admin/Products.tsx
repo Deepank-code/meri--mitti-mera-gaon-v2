@@ -45,16 +45,13 @@ const columns: Column<DataType>[] = [
 const Products = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
-  const { isLoading, data, isError, error, refetch } = useAllProductsQuery(
-    user!._id
-  );
+  const { isLoading, data, isError, error } = useAllProductsQuery(user!._id);
   const [rows, setRows] = useState<DataType[]>([]);
   console.log({ isLoading, isError, data });
   if (isError) {
     toast.error((error as CustomError).data.message);
   }
   useEffect(() => {
-    refetch();
     if (data?.products) {
       setRows(
         data?.products &&

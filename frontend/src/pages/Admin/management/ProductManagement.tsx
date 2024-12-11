@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import AdminSideBar from "../../../Components/AdminSideBar";
 import { useSelector } from "react-redux";
 
-import { UserReducerInitalStateType } from "../../../types/user-type";
+import { UserReducerInitalStateType } from "../../../types/reducer-type";
 import {
   useDeleteProductMutation,
   useProductDetailsQuery,
@@ -31,9 +31,7 @@ const ProductManagement = () => {
     console.log("no data receiverd");
   }
   console.log("error " + isError);
-  if (!data) {
-    console.log("no data receiverd");
-  }
+
   const { name, photo, price, stock, category } = data?.product || {
     name: "",
     price: 0,
@@ -101,7 +99,7 @@ const ProductManagement = () => {
       setStockUpdate(data.product.stock);
       setCategoryUpdate(data.product.category);
     }
-  }, [data]);
+  }, [data, refetch]);
 
   return (
     <div className="adminContainer">

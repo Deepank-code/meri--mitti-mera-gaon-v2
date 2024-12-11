@@ -11,7 +11,7 @@ import { auth } from "./firebase.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { userExist, userNotExist } from "./redux/reducer/userReducer.ts";
 import { getUser } from "./redux/api/userApi.ts";
-import { UserReducerInitalStateType } from "./types/user-type.ts";
+import { UserReducerInitalStateType } from "./types/reducer-type.ts";
 import ProtectedRoute from "./Components/ProtectedRoute.tsx";
 const Home = lazy(() => import("./pages/Home/Home.tsx"));
 const Cart = lazy(() => import("./pages/Cart.tsx"));

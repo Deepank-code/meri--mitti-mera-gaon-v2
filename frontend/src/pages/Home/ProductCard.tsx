@@ -2,18 +2,19 @@ import { FaBasketShopping } from "react-icons/fa6";
 import "./ProductCard.css";
 
 import { BiHeart } from "react-icons/bi";
+import { CartItem } from "../../types/types";
 
 type ProductPropType = {
-  productID: string;
+  productId: string;
   photo: string;
   name: string;
   price: number;
   stock: number;
-  handler: () => void;
+  handler: (cartItem: CartItem) => string | undefined;
 };
 
 const ProductCard = ({
-  // productID,
+  productId,
   photo,
   name,
   price,
@@ -34,7 +35,11 @@ const ProductCard = ({
 
       <span>₹ {price}</span>
 
-      <button onClick={() => handler()}>
+      <button
+        onClick={() =>
+          handler({ productId, photo, name, price, stock, quantity: 1 })
+        }
+      >
         Add To Cart <FaBasketShopping />
       </button>
       <span id="heart">

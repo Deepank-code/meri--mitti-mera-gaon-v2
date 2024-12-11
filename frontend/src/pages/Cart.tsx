@@ -1,34 +1,17 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { VscError } from "react-icons/vsc";
 import CartItem from "./CartItem";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { CartReducerInitalStateType } from "../types/reducer-type";
 
-const cartItems = [
-  {
-    productID: "asdff",
-    photo:
-      "https://img.freepik.com/free-photo/photo-red-fresh-tomato-blank-background_125540-4260.jpg?size=626&ext=jpg&ga=GA1.1.1824858138.1725949183&semt=ais_hybrid",
-    name: "Tomato",
-    price: 3000,
-    quantity: 4,
-    stock: 10,
-  },
-  {
-    productID: "asdff",
-    photo:
-      "https://img.freepik.com/free-photo/photo-red-fresh-tomato-blank-background_125540-4260.jpg?size=626&ext=jpg&ga=GA1.1.1824858138.1725949183&semt=ais_hybrid",
-    name: "Tomato",
-    price: 3000,
-    quantity: 4,
-    stock: 10,
-  },
-];
-const subTotal = 4000;
-const tax = Math.round(subTotal * 0.18);
-const shippingChargers = 200;
-const discount = 400;
-const total = subTotal + tax + shippingChargers;
 const Cart = () => {
+  const { cartItems, subTotal, tax, total, shippingCharges, discount } =
+    useSelector(
+      (state: { cartReducer: CartReducerInitalStateType }) => state.cartReducer
+    );
+  console.log(cartItems);
+
   const [couponCode, setCoupnCode] = useState<string>();
   const [isvalidCouponCode, setvalidCouponCode] = useState<boolean>();
   //   useEffect(() => {
@@ -45,7 +28,7 @@ const Cart = () => {
       </main>
       <aside>
         <p>SubTotal: ₹{subTotal}</p>
-        <p>Shipping charges: ₹{shippingChargers}</p>
+        <p>Shipping charges: ₹{shippingCharges}</p>
         <p>Tax: ₹{tax}</p>
         <p>
           Discount -<em>{discount}</em>

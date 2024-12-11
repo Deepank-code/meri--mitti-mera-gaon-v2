@@ -16,6 +16,7 @@ import name from "../../assets/name.png";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import toast from "react-hot-toast";
+import { FaCartShopping } from "react-icons/fa6";
 interface PropTypes {
   user: User | null;
 }
@@ -80,7 +81,9 @@ const Header = ({ user }: PropTypes) => {
               <MdLocalPostOffice />
               Post Office Scheme
             </NavLink>
-            <NavLink to={"pyq"}>PYQ</NavLink>
+            <NavLink to={"/cart"}>
+              <FaCartShopping />
+            </NavLink>
             {user?._id ? (
               <button onClick={() => setIsOpen((prev) => !prev)}>
                 <FaUser />

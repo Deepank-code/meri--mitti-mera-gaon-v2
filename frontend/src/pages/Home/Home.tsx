@@ -7,18 +7,23 @@ import { useLatestProductsQuery } from "../../redux/api/productApi";
 import toast from "react-hot-toast";
 import { Skleton } from "../../Components/Loader";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { CartItem } from "../../types/types";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/reducer/cartReducer";
 
 const Home = () => {
-  const { data, isLoading, isError, refetch } = useLatestProductsQuery("");
-
+  const { data, isLoading, isError } = useLatestProductsQuery("");
+  const dispatch = useDispatch();
   if (isError) {
     toast.error("Can't fetch products");
   }
-  const addTocartHandler = () => {};
-  useEffect(() => {
-    refetch();
-  }, [data]);
+  const addTocartHandler = (cartItem: CartItem) => {
+    if (cartItem.stock < 1) {
+      return toast.error("out of stock");
+    }
+    dispatch(addToCart(cartItem));
+  };
+
   return (
     <>
       <div id="parent-home-div">
